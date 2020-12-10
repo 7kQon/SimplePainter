@@ -1,3 +1,4 @@
+import view.*;
 import javax.swing.*;
 
 public class SimplePainter {
