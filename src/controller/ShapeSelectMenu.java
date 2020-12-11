@@ -7,11 +7,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuController extends JPanel {
+public class ShapeSelectMenu extends ShapeController {
 
     private JButton[] btnMenuArray;
 
-    public MenuController(){
+    public ShapeSelectMenu(){
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createTitledBorder("Menu"));
         setLayout(new GridLayout(2,3));
@@ -33,21 +33,9 @@ public class MenuController extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             Object obj = e.getSource();
-            OptionController optionController = OptionController.getInstance();
-            DrawController drawController = DrawController.getInstance();
-
-            optionController.setTxtFieldVisible(true);
-            optionController.setCheckBoxVisible(false);
-
             for(int i = 0; i < 6; i++){
                 if(obj == btnMenuArray[i]){
-                    System.out.println("menu clicked");
-                    drawController.setDrawMode(i);
-                    optionController.setOptionSize(10);
-                    if(i == Constants.RECT || i == Constants.OVAL){
-                        optionController.setCheckBoxVisible(true);
-                        break;
-                    }
+                    sharedShape.setDrawMode(i);
                 }
             }
         }

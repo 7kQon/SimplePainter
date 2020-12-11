@@ -1,34 +1,26 @@
 package controller;
 
 import constants.Constants;
-import model.OptionModel;
 
 import javax.swing.*;
-import javax.swing.text.html.Option;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
+import java.beans.PropertyChangeEvent;
 
-public class OptionController extends JPanel {
-    private static OptionController instance = null;
+public class ShapeOptionForm extends ShapeController {
 
-    private OptionModel option;
     private JButton buttonColorChooser;
     private JTextField txtFieldSize;
     private JCheckBox checkBoxFill;
 
-    public static OptionController getInstance(){
-        if(instance == null) instance = new OptionController();
-        return instance;
-    }
+    public ShapeOptionForm(){
+        super();
+        sharedShape.addObserver(this);
 
-    private OptionController(){
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createTitledBorder("Option"));
         setLayout(new GridLayout(3,1));
-
-        option = new OptionModel();
 
         buttonColorChooser = new JButton("Color Chooser");
         buttonColorChooser.setFont(Constants.CONSOLAS);
@@ -41,7 +33,7 @@ public class OptionController extends JPanel {
         txtFieldSize = new JTextField();
         txtFieldSize.setFont(Constants.CONSOLAS);
         txtFieldSize.addActionListener(new TextFieldChanged());
-        txtFieldSize.setVisible(false);
+        txtFieldSize.setVisible(true);
         add(txtFieldSize);
 
         checkBoxFill = new JCheckBox("Fill");
@@ -51,35 +43,39 @@ public class OptionController extends JPanel {
         add(checkBoxFill);
     }
 
-    public OptionModel getOptionModel(){return this.option;}
-
-    public void setOptionColor(Color color){
-        System.out.println("set color");
-        option.color = color;
+    private void setShapeColor(Color color){
+        sharedShape.selectedColor = color;
     }
-    public void setOptionSize(int size){
-        System.out.println("set Size");
+    public void setShapeSize(int size){
+        sharedShape.nSize = size;
         txtFieldSize.setText(Integer.toString(size));
-        option.size = size;
     }
-    public void setOptionFill(boolean fill){
+    public void setShapeFill(boolean fill){
+        sharedShape.bFill = fill;
         checkBoxFill.setSelected(fill);
-        option.fill = fill;
     }
 
-    public void setTxtFieldVisible(boolean visible){
-        txtFieldSize.setVisible(visible);
+    @Override
+    public void noticeDrawModeChanged(int mode) {
+        super.noticeDrawModeChanged(mode);
+        onDrawModeChanged(mode);
     }
 
-    public void setCheckBoxVisible(boolean visible){
-        checkBoxFill.setVisible(visible);
+    private void onDrawModeChanged(int drawMode){
+        setShapeSize(10);
+        if(drawMode == Constants.RECT || drawMode == Constants.OVAL){
+            setShapeFill(false);
+            checkBoxFill.setVisible(true);
+            return;
+        }
+        checkBoxFill.setVisible(false);
     }
 
     class ColorChooserButtonClicked implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            setOptionColor(JColorChooser.showDialog(buttonColorChooser, "Color Chooser", Color.BLACK));
-            DrawController.getInstance().setOption(option);
+            Color color = JColorChooser.showDialog(buttonColorChooser, "Color Chooser", Color.BLACK);
+            setShapeColor(color);
         }
     }
 
@@ -87,8 +83,8 @@ public class OptionController extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             JTextField txtField = ((JTextField) e.getSource());
-            setOptionSize(Integer.parseInt(txtField.getText()));
-            DrawController.getInstance().setOption(option);
+            int size = Integer.parseInt(txtField.getText());
+            setShapeSize(size);
         }
     }
 
@@ -97,8 +93,8 @@ public class OptionController extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             JCheckBox checkBox = ((JCheckBox) e.getSource());
-            setOptionFill(checkBox.isSelected());
-            DrawController.getInstance().setOption(option);
+            boolean fill = checkBox.isSelected();
+            setShapeFill(fill);
         }
     }
 }

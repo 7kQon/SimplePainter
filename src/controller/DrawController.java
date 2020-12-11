@@ -1,8 +1,8 @@
 package controller;
 
 import constants.Constants;
-import model.DrawModel;
-import model.OptionModel;
+import model.Shape;
+import model.SharedShape;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,19 +12,14 @@ import java.awt.event.MouseMotionListener;
 import java.util.*;
 
 public class DrawController extends JPanel {
-    private static DrawController instance = null;
-    private DrawModel model;
-    private ArrayList<DrawModel> modelList;
+
+    private SharedShape model;
+    private ArrayList<Shape> modelList;
+
     private DrawListener drawListener;
     private boolean bDrag;
 
-    private OptionController optionController;
-
-    public static DrawController getInstance(){
-        if(instance == null) instance = new DrawController();
-        return instance;
-    }
-    private DrawController(){
+    public DrawController(){
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
@@ -32,23 +27,10 @@ public class DrawController extends JPanel {
         addMouseListener(drawListener);
         addMouseMotionListener(drawListener);
 
-        optionController = OptionController.getInstance();
-
-        model = new DrawModel();
+        model = SharedShape.getInstance();
         modelList = new ArrayList<>();
 
-        model.nDrawMode = Constants.NONE;
         bDrag = false;
-    }
-
-    public void setDrawMode(int mode){
-        model.nDrawMode = mode;
-    }
-
-    public void setOption(OptionModel option){
-        model.selectedColor = option.color;
-        model.nSize = option.size;
-        model.bFill = option.fill;
     }
 
     public void paintComponent(Graphics g){
@@ -69,7 +51,7 @@ public class DrawController extends JPanel {
 
         }
 
-        for(DrawModel data: modelList){
+        for(Shape data: modelList){
             switch (data.nDrawMode){
                 case Constants.DOT:
                     g.setColor(data.selectedColor);
@@ -100,8 +82,7 @@ public class DrawController extends JPanel {
             System.out.println("draw clicked");
             if(model.nDrawMode == Constants.DOT){
                 model.src = e.getPoint();
-                model.nSize = optionController.getOptionModel().size;
-                modelList.add(new DrawModel(model));
+                modelList.add(new Shape(model));
                 repaint();
             }
         }
@@ -111,7 +92,6 @@ public class DrawController extends JPanel {
             if(model.nDrawMode == Constants.LINE){
                 bDrag = true;
                 model.src = e.getPoint();
-                model.nSize = optionController.getOptionModel().size;
             }
         }
 
@@ -120,7 +100,7 @@ public class DrawController extends JPanel {
             if(model.nDrawMode == Constants.LINE){
                 bDrag = false;
                 model.dest = e.getPoint();
-                modelList.add(new DrawModel(model));
+                modelList.add(new Shape(model));
                 repaint();
             }
         }
