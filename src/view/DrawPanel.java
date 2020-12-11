@@ -13,9 +13,10 @@ import java.awt.event.MouseMotionListener;
 import java.util.*;
 import java.util.List;
 
+// Painting Area View
 public class DrawPanel extends JPanel implements IShapeObserver {
     private SharedShape sharedShape;
-    private ArrayList<Shape> shapes;
+    private List<Shape> shapes; // shape(model) container
 
     private MouseEventListener mouseEventListener;
     private boolean bDrag;
@@ -49,7 +50,7 @@ public class DrawPanel extends JPanel implements IShapeObserver {
                             drawOval(g, sharedShape);
                             break;
                             case Constants.FREE:
-                                drawFreeLine(g, sharedShape);
+                                drawPath(g, sharedShape);
                                 break;
             }
 
@@ -70,7 +71,7 @@ public class DrawPanel extends JPanel implements IShapeObserver {
                                 drawOval(g, shape);
                                 break;
                                 case Constants.FREE:
-                                    drawFreeLine(g, shape);
+                                    drawPath(g, shape);
                                     break;
                 default:
                     break;
@@ -83,7 +84,7 @@ public class DrawPanel extends JPanel implements IShapeObserver {
         ((Graphics2D) g).setStroke(new BasicStroke(shape.nSize));
         g.setColor(shape.selectedColor);
         g.drawLine(shape.src.x, shape.src.y, shape.dest.x, shape.dest.y);
-    }
+    } // draw line
 
     private void drawRect(Graphics g, Shape shape){
         ((Graphics2D) g).setStroke(new BasicStroke(shape.nSize));// init stroke
@@ -94,7 +95,7 @@ public class DrawPanel extends JPanel implements IShapeObserver {
 
         if(shape.bFill){ g.fillRect(bounds.min.x, bounds.min.y, bounds.width, bounds.height); return;}
         g.drawRect(bounds.min.x, bounds.min.y, bounds.width, bounds.height);
-    }
+    } // draw rect
 
     private void drawOval(Graphics g, Shape shape){
         ((Graphics2D) g).setStroke(new BasicStroke(shape.nSize));// init stroke
@@ -105,33 +106,33 @@ public class DrawPanel extends JPanel implements IShapeObserver {
 
         if(shape.bFill) { g.fillOval(bounds.min.x, bounds.min.y, bounds.width, bounds.height); return; }
         g.drawOval(bounds.min.x, bounds.min.y, bounds.width, bounds.height);
-    }
+    } // draw oval
 
     private void drawDot(Graphics g, Shape shape){
         ((Graphics2D) g).setStroke(new BasicStroke(1)); // init stroke
         g.setColor(shape.selectedColor);
         g.fillOval(shape.src.x - shape.nSize/2, shape.src.y - shape.nSize / 2, shape.nSize, shape.nSize);
-    }
+    } // draw dot
 
-    private void drawFreeLine(Graphics g, Shape shape){
+    private void drawPath(Graphics g, Shape shape){
         ((Graphics2D) g).setStroke(new BasicStroke(shape.nSize));// init stroke
         g.setColor(shape.selectedColor);
         int max = shape.path.size();
         for(int i = 0; i < max - 1; i++){
-            int sx, sy, dx, dy;
+            int sx, sy, dx, dy; // source, destination
             sx = shape.path.get(i).x;
             sy = shape.path.get(i).y;
             dx = shape.path.get(i + 1).x;
             dy = shape.path.get(i + 1).y;
             g.drawLine(sx, sy, dx, dy);
         }
-    }
+    } // draw path
 
     @Override
     public void noticeDrawModeChanged(int drawMode) {
         if(drawMode == Constants.UNDO){ undo(); return; }
         if(drawMode == Constants.CLEAR){ clear(); return; }
-    }
+    } // update view when draw mode changed
 
     @Override
     public void noticeOptionChanged(){
@@ -143,13 +144,14 @@ public class DrawPanel extends JPanel implements IShapeObserver {
         int last = shapes.size() - 1;
         shapes.remove(last);
         repaint();
-    }
+    } // remove a last element of shape model container
+
 
     private void clear(){
         if(shapes.isEmpty()) return;
         shapes.clear();
         repaint();
-    }
+    } // clear the shape model container
 
     private class Bounds{
         Point min;
@@ -165,7 +167,7 @@ public class DrawPanel extends JPanel implements IShapeObserver {
             width = Math.abs(p1.x - p2.x);
             height = Math.abs(p1.y - p2.y);
         }
-    }
+    } // inner class Bounds
 
     private class MouseEventListener implements MouseListener, MouseMotionListener{
         @Override
@@ -210,7 +212,7 @@ public class DrawPanel extends JPanel implements IShapeObserver {
                     bDrag = false;
                     if(drawMode != Constants.FREE) sharedShape.dest = e.getPoint();
                     shapes.add(new Shape(sharedShape));
-                    if(drawMode == Constants.FREE) sharedShape.path.clear();
+                    if(drawMode == Constants.FREE) sharedShape.path.clear(); // clear after copy
                     repaint();
             }
         }

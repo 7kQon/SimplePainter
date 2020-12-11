@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+// UI feedback
 public class HoveringListener implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {

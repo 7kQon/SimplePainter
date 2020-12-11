@@ -5,6 +5,7 @@ import observer.*;
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 
+// base class of shape(model) controller
 public class ShapeController extends JPanel implements IShapeObserver {
     protected SharedShape sharedShape;
     public ShapeController(){
@@ -12,9 +13,7 @@ public class ShapeController extends JPanel implements IShapeObserver {
     }
 
     @Override
-    public void noticeDrawModeChanged(int drawMode) {
-
-    }
+    public void noticeDrawModeChanged(int drawMode) {}
 
     @Override
     public void noticeOptionChanged(){}

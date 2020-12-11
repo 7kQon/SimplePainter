@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
+// shape option form controller
 public class ShapeOptionForm extends ShapeController {
 
     private JButton buttonColorChooser;
@@ -48,19 +49,19 @@ public class ShapeOptionForm extends ShapeController {
     private void setShapeColor(Color color){
         sharedShape.selectedColor = color;
         sharedShape.notifyOptionChanged();
-    }
+    } // set sharedShape's color and notifies
 
     public void setShapeSize(int size){
         sharedShape.nSize = size;
         sharedShape.notifyOptionChanged();
         txtFieldSize.setText(Integer.toString(size));
+    } // set sharedShape's size and notifies
 
-    }
     public void setShapeFill(boolean fill){
         sharedShape.bFill = fill;
         sharedShape.notifyOptionChanged();
         checkBoxFill.setSelected(fill);
-    }
+    } // set sharedShape's fill and notifies
 
     @Override
     public void noticeDrawModeChanged(int mode) {
@@ -69,7 +70,6 @@ public class ShapeOptionForm extends ShapeController {
     }
 
     private void onDrawModeChanged(int drawMode){
-
         if(drawMode == Constants.UNDO || drawMode == Constants.CLEAR){
             buttonColorChooser.setVisible(false);
             txtFieldSize.setVisible(false);
@@ -96,7 +96,7 @@ public class ShapeOptionForm extends ShapeController {
             Color color = JColorChooser.showDialog(buttonColorChooser, "Color Chooser", Color.BLACK);
             setShapeColor(color);
         }
-    }
+    } // color chooser button action
 
     class TextFieldChanged implements ActionListener{
         @Override
@@ -105,15 +105,14 @@ public class ShapeOptionForm extends ShapeController {
             int size = Integer.parseInt(txtField.getText());
             setShapeSize(size);
         }
-    }
+    } // text field action
 
     class CheckBoxClicked implements ActionListener{
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JCheckBox checkBox = ((JCheckBox) e.getSource());
             boolean fill = checkBox.isSelected();
             setShapeFill(fill);
         }
-    }
+    } // check box action
 }

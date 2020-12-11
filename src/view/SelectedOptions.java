@@ -7,6 +7,7 @@ import observer.IShapeObserver;
 import javax.swing.*;
 import java.awt.*;
 
+// show sharedShape info
 public class SelectedOptions extends JPanel implements IShapeObserver {
     private SharedShape sharedShape;
     private JLabel lblColor, lblSize, lblShape, lblFill;
@@ -46,6 +47,7 @@ public class SelectedOptions extends JPanel implements IShapeObserver {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(sharedShape.nDrawMode > Constants.FREE) return;
+        // show current selected color
         int x = lblColor.getX() + 80 - 10;
         int y = lblColor.getY() + lblColor.getHeight() / 2 - 10;
         g.setColor(sharedShape.selectedColor);
@@ -64,6 +66,7 @@ public class SelectedOptions extends JPanel implements IShapeObserver {
             lblFill.setVisible(false);
             return;
         }
+
         String shapeText = " Shape: " + Constants.MENU[drawMode];
         lblShape.setText(shapeText);
 
@@ -82,12 +85,12 @@ public class SelectedOptions extends JPanel implements IShapeObserver {
             lblFill.setVisible(true);
             return;
         }
-    }
+    } // update view when sharedShape changed
 
     @Override
     public void noticeOptionChanged(){
         lblFill.setText(stringFormat[3] + (sharedShape.bFill ? "true" : "false"));
         lblSize.setText(stringFormat[1] + sharedShape.nSize);
         repaint();
-    }
+    } // update view when sharedShape changed
 }

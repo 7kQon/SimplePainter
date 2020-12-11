@@ -5,16 +5,19 @@ import observer.IShapeObserver;
 import java.util.ArrayList;
 import java.util.List;
 
+// only shared instance
 public class SharedShape extends Shape {
-    private static SharedShape instance = null;
+    private static SharedShape instance = null; // implement Singleton pattern
     protected List<IShapeObserver> observers;
 
     private SharedShape(){
+        // implement Singleton pattern
         super();
         observers = new ArrayList<>();
     }
 
     public static SharedShape getInstance(){
+        // implement Singleton pattern
         if(instance == null) instance = new SharedShape();
         return instance;
     }

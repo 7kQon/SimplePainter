@@ -31,6 +31,5 @@ public class SimplePainterView extends JPanel {
         selectedOptions.setBounds(510, 610, 300, 200);
 
         add(selectedOptions);
-
-    } // view.SimplePainterView()
-} // view.SimplePainterView
+    }
+}

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// shape select menu controller
 public class ShapeSelectMenu extends ShapeController {
 
     private DrawModeButton[] btnMenuArray;
@@ -30,7 +31,7 @@ public class ShapeSelectMenu extends ShapeController {
 
             add(btnMenuArray[i]);
         }
-    }
+    } // constructor
 
     private class DrawModeButton extends JButton{
         int drawMode;
@@ -47,5 +48,5 @@ public class ShapeSelectMenu extends ShapeController {
         public void setDrawMode(int drawMode){
             this.drawMode = drawMode;
         }
-    }
+    } // inner class DrawModeButton
 }

@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Constants {
     public static final String MENU[] = {
-            "Dot", "Line","Rect","Oval","Free", "Undo","Clear"
+            "Dot", "Line", "Rect", "Oval", "Free", "Undo", "Clear"
     };
     public static final Color HOVERING[] = {
             Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE

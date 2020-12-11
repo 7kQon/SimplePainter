@@ -5,13 +5,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// shape data
 public class Shape {
     public int      nDrawMode;
     public Point    src, dest;
     public int      nSize;
     public boolean  bFill;
     public Color    selectedColor;
-    public List<Point> path;
+    public List<Point> path; // free line points container
 
     public Shape(){
         nDrawMode = Constants.NONE;
@@ -21,7 +22,7 @@ public class Shape {
         bFill = false;
         selectedColor = Color.BLACK;
         path = new ArrayList<>();
-    }
+    } // constructor
 
     public Shape(Shape model){
         this.nDrawMode = model.nDrawMode;
@@ -34,5 +35,5 @@ public class Shape {
             this.path = new ArrayList<>();
             this.path.addAll(model.path);
         }
-    }
+    } // constructor
 }

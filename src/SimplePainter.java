@@ -7,8 +7,8 @@ public class SimplePainter {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        SimplePainterView view = new SimplePainterView();
-        frame.getContentPane().add(view);
+        SimplePainterView view = new SimplePainterView(); // primary view
+        frame.getContentPane().add(view); // add view to frame
 
         frame.pack();
         frame.setVisible(true);
