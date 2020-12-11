@@ -2,6 +2,8 @@ package model;
 
 import constants.Constants;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Shape {
     public int      nDrawMode;
@@ -9,6 +11,7 @@ public class Shape {
     public int      nSize;
     public boolean  bFill;
     public Color    selectedColor;
+    public List<Point> path;
 
     public Shape(){
         nDrawMode = Constants.NONE;
@@ -17,6 +20,7 @@ public class Shape {
         nSize = 1;
         bFill = false;
         selectedColor = Color.BLACK;
+        path = new ArrayList<>();
     }
 
     public Shape(Shape model){
@@ -26,5 +30,9 @@ public class Shape {
         this.nSize = model.nSize;
         this.bFill = model.bFill;
         this.selectedColor = model.selectedColor;
+        if(!model.path.isEmpty()){
+            this.path = new ArrayList<>();
+            this.path.addAll(model.path);
+        }
     }
 }

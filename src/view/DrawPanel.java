@@ -42,12 +42,15 @@ public class DrawPanel extends JPanel implements IShapeObserver {
                 case Constants.LINE:
                     drawLine(g, sharedShape);
                     break;
-                case Constants.RECT:
-                    drawRect(g, sharedShape);
-                    break;
-                case Constants.OVAL:
-                    drawOval(g, sharedShape);
-                    break;
+                    case Constants.RECT:
+                        drawRect(g, sharedShape);
+                        break;
+                        case Constants.OVAL:
+                            drawOval(g, sharedShape);
+                            break;
+                            case Constants.FREE:
+                                drawFreeLine(g, sharedShape);
+                                break;
             }
 
         }
@@ -66,6 +69,9 @@ public class DrawPanel extends JPanel implements IShapeObserver {
                             case Constants.OVAL:
                                 drawOval(g, shape);
                                 break;
+                                case Constants.FREE:
+                                    drawFreeLine(g, shape);
+                                    break;
                 default:
                     break;
             }
@@ -105,6 +111,20 @@ public class DrawPanel extends JPanel implements IShapeObserver {
         ((Graphics2D) g).setStroke(new BasicStroke(1)); // init stroke
         g.setColor(shape.selectedColor);
         g.fillOval(shape.src.x - shape.nSize/2, shape.src.y - shape.nSize / 2, shape.nSize, shape.nSize);
+    }
+
+    private void drawFreeLine(Graphics g, Shape shape){
+        ((Graphics2D) g).setStroke(new BasicStroke(shape.nSize));// init stroke
+        g.setColor(shape.selectedColor);
+        int max = shape.path.size();
+        for(int i = 0; i < max - 1; i++){
+            int sx, sy, dx, dy;
+            sx = shape.path.get(i).x;
+            sy = shape.path.get(i).y;
+            dx = shape.path.get(i + 1).x;
+            dy = shape.path.get(i + 1).y;
+            g.drawLine(sx, sy, dx, dy);
+        }
     }
 
     @Override
@@ -159,33 +179,41 @@ public class DrawPanel extends JPanel implements IShapeObserver {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            switch (sharedShape.nDrawMode){
-                case Constants.LINE, Constants.RECT, Constants.OVAL:
+            int drawMode = sharedShape.nDrawMode;
+            switch (drawMode){
+                case Constants.LINE, Constants.RECT, Constants.OVAL, Constants.FREE:
                     bDrag = true;
-                    sharedShape.src = e.getPoint();
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            switch (sharedShape.nDrawMode){
-                case Constants.LINE, Constants.RECT, Constants.OVAL:
-                    bDrag = false;
-                    sharedShape.dest = e.getPoint();
-                    shapes.add(new Shape(sharedShape));
-                    repaint();
+                    if(drawMode == Constants.FREE) {
+                        sharedShape.path.add(e.getPoint());
+                    }
+                    else sharedShape.src = e.getPoint();
             }
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            switch (sharedShape.nDrawMode){
-                case Constants.LINE, Constants.RECT, Constants.OVAL:
-                    sharedShape.dest = e.getPoint();
+            int drawMode = sharedShape.nDrawMode;
+            switch (drawMode){
+                case Constants.LINE, Constants.RECT, Constants.OVAL, Constants.FREE:
+                    if(drawMode == Constants.FREE){
+                        sharedShape.path.add(e.getPoint());
+                    }else sharedShape.dest = e.getPoint();
                     repaint();
             }
         }
 
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            int drawMode = sharedShape.nDrawMode;
+            switch (drawMode){
+                case Constants.LINE, Constants.RECT, Constants.OVAL, Constants.FREE:
+                    bDrag = false;
+                    if(drawMode != Constants.FREE) sharedShape.dest = e.getPoint();
+                    shapes.add(new Shape(sharedShape));
+                    if(drawMode == Constants.FREE) sharedShape.path.clear();
+                    repaint();
+            }
+        }
         @Override
         public void mouseEntered(MouseEvent e) { }
 

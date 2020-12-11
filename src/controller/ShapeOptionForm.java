@@ -77,9 +77,10 @@ public class ShapeOptionForm extends ShapeController {
             return;
         }
 
+        setShapeColor(Color.BLACK);
         buttonColorChooser.setVisible(true);
 
-        setShapeSize(1);
+        setShapeSize(10);
         txtFieldSize.setVisible(true);
         if(drawMode == Constants.RECT || drawMode == Constants.OVAL){
             setShapeFill(false); // init false
