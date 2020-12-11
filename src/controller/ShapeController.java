@@ -15,4 +15,7 @@ public class ShapeController extends JPanel implements IShapeObserver {
     public void noticeDrawModeChanged(int drawMode) {
 
     }
+
+    @Override
+    public void noticeOptionChanged(){}
 }

@@ -33,7 +33,7 @@ public class SelectedOptions extends JPanel implements IShapeObserver {
         for(int i = 0; i < labels.length; i++){
             labels[i].setFont(Constants.CONSOLAS);
             labels[i].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
-            labels[i].setVisible(true);
+            labels[i].setVisible(false);
             add(labels[i]);
         }
 
@@ -82,5 +82,12 @@ public class SelectedOptions extends JPanel implements IShapeObserver {
             lblFill.setVisible(true);
             return;
         }
+    }
+
+    @Override
+    public void noticeOptionChanged(){
+        lblFill.setText(stringFormat[3] + (sharedShape.bFill ? "true" : "false"));
+        lblSize.setText(stringFormat[1] + sharedShape.nSize);
+        repaint();
     }
 }

@@ -33,6 +33,7 @@ public class ShapeOptionForm extends ShapeController {
 
         txtFieldSize = new JTextField();
         txtFieldSize.setFont(Constants.CONSOLAS);
+        txtFieldSize.setText("1");
         txtFieldSize.addActionListener(new TextFieldChanged());
         txtFieldSize.setVisible(false);
         add(txtFieldSize);
@@ -46,13 +47,18 @@ public class ShapeOptionForm extends ShapeController {
 
     private void setShapeColor(Color color){
         sharedShape.selectedColor = color;
+        sharedShape.notifyOptionChanged();
     }
+
     public void setShapeSize(int size){
         sharedShape.nSize = size;
+        sharedShape.notifyOptionChanged();
         txtFieldSize.setText(Integer.toString(size));
+
     }
     public void setShapeFill(boolean fill){
         sharedShape.bFill = fill;
+        sharedShape.notifyOptionChanged();
         checkBoxFill.setSelected(fill);
     }
 
@@ -73,7 +79,7 @@ public class ShapeOptionForm extends ShapeController {
 
         buttonColorChooser.setVisible(true);
 
-        setShapeSize(10); // init 10
+        setShapeSize(1);
         txtFieldSize.setVisible(true);
         if(drawMode == Constants.RECT || drawMode == Constants.OVAL){
             setShapeFill(false); // init false

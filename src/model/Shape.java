@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Shape {
     public int      nDrawMode;
-    public Point src, dest;
+    public Point    src, dest;
     public int      nSize;
     public boolean  bFill;
     public Color    selectedColor;
