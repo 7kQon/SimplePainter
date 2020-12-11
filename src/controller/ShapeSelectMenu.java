@@ -14,11 +14,12 @@ public class ShapeSelectMenu extends ShapeController {
     public ShapeSelectMenu(){
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createTitledBorder("Menu"));
-        setLayout(new GridLayout(2,3));
+        setLayout(new GridLayout(3,3));
 
-        btnMenuArray = new DrawModeButton[6];
+        btnMenuArray = new DrawModeButton[7];
         for(int i = 0; i < btnMenuArray.length; i++){
             btnMenuArray[i] = new DrawModeButton(Constants.MENU[i]);
+            btnMenuArray[i].setFont(Constants.CONSOLAS);
             btnMenuArray[i].setDrawMode(i);
 
             btnMenuArray[i].setBackground(Constants.HOVERING[0]);

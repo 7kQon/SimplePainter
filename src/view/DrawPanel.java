@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.*;
+import java.util.List;
 
 public class DrawPanel extends JPanel implements IShapeObserver {
     private SharedShape sharedShape;
@@ -62,9 +63,9 @@ public class DrawPanel extends JPanel implements IShapeObserver {
                         case Constants.RECT:
                             drawRect(g, shape);
                             break;
-                        case Constants.OVAL:
-                            drawOval(g, shape);
-                            break;
+                            case Constants.OVAL:
+                                drawOval(g, shape);
+                                break;
                 default:
                     break;
             }
@@ -110,6 +111,11 @@ public class DrawPanel extends JPanel implements IShapeObserver {
     public void noticeDrawModeChanged(int drawMode) {
         if(drawMode == Constants.UNDO){ undo(); return; }
         if(drawMode == Constants.CLEAR){ clear(); return; }
+    }
+
+    @Override
+    public void noticeOptionChanged(){
+
     }
 
     private void undo(){

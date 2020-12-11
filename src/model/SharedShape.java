@@ -1,9 +1,9 @@
 package model;
 
+import constants.Constants;
 import observer.IShapeObserver;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +35,18 @@ public class SharedShape extends Shape {
 
     public void setDrawMode(int drawMode){
         nDrawMode = drawMode;
-        noticeDrawModeChanged();
+        notifyDrawModeChanged();
     }
 
-    private void noticeDrawModeChanged(){
+    public void notifyDrawModeChanged(){
         for(var observer: observers){
             observer.noticeDrawModeChanged(nDrawMode);
+        }
+    }
+
+    public void notifyOptionChanged(){
+        for(var observer: observers){
+            observer.noticeOptionChanged();
         }
     }
 }
