@@ -45,7 +45,7 @@ public class SelectedOptions extends JPanel implements IShapeObserver {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(sharedShape.nDrawMode > Constants.OVAL) return;
+        if(sharedShape.nDrawMode > Constants.FREE) return;
         int x = lblColor.getX() + 80 - 10;
         int y = lblColor.getY() + lblColor.getHeight() / 2 - 10;
         g.setColor(sharedShape.selectedColor);
@@ -67,7 +67,7 @@ public class SelectedOptions extends JPanel implements IShapeObserver {
         String shapeText = " Shape: " + Constants.MENU[drawMode];
         lblShape.setText(shapeText);
 
-        if(drawMode == Constants.DOT || drawMode == Constants.LINE){
+        if(drawMode == Constants.DOT || drawMode == Constants.LINE || drawMode == Constants.FREE){
             lblColor.setVisible(true);
             lblSize.setVisible(true);
             lblShape.setVisible(true);
