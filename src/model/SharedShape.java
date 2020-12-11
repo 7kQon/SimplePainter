@@ -34,10 +34,8 @@ public class SharedShape extends Shape {
     }
 
     public void setDrawMode(int drawMode){
-        if(nDrawMode != drawMode){
-            nDrawMode = drawMode;
-            noticeDrawModeChanged();
-        }
+        nDrawMode = drawMode;
+        noticeDrawModeChanged();
     }
 
     private void noticeDrawModeChanged(){

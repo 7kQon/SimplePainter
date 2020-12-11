@@ -28,12 +28,13 @@ public class ShapeOptionForm extends ShapeController {
         buttonColorChooser.setForeground(Constants.HOVERING[1]);
         buttonColorChooser.addMouseListener(new HoveringListener());
         buttonColorChooser.addActionListener(new ColorChooserButtonClicked());
+        buttonColorChooser.setVisible(false);
         add(buttonColorChooser);
 
         txtFieldSize = new JTextField();
         txtFieldSize.setFont(Constants.CONSOLAS);
         txtFieldSize.addActionListener(new TextFieldChanged());
-        txtFieldSize.setVisible(true);
+        txtFieldSize.setVisible(false);
         add(txtFieldSize);
 
         checkBoxFill = new JCheckBox("Fill");
@@ -62,9 +63,20 @@ public class ShapeOptionForm extends ShapeController {
     }
 
     private void onDrawModeChanged(int drawMode){
-        setShapeSize(10);
+
+        if(drawMode == Constants.UNDO || drawMode == Constants.CLEAR){
+            buttonColorChooser.setVisible(false);
+            txtFieldSize.setVisible(false);
+            checkBoxFill.setVisible(false);
+            return;
+        }
+
+        buttonColorChooser.setVisible(true);
+
+        setShapeSize(10); // init 10
+        txtFieldSize.setVisible(true);
         if(drawMode == Constants.RECT || drawMode == Constants.OVAL){
-            setShapeFill(false);
+            setShapeFill(false); // init false
             checkBoxFill.setVisible(true);
             return;
         }
