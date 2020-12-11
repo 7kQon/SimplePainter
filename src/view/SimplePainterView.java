@@ -8,7 +8,7 @@ public class SimplePainterView extends JPanel {
     private DrawPanel drawPanel;
     private ShapeSelectMenu shapeSelectMenu;
     private ShapeOptionForm shapeOptionForm;
-    private JPanel messagePanel;
+    private SelectedOptions selectedOptions;
 
     public SimplePainterView(){
         setBackground(Color.WHITE);
@@ -27,11 +27,10 @@ public class SimplePainterView extends JPanel {
         shapeOptionForm.setBounds(310, 610, 200,200);
         add(shapeOptionForm);
 
-        messagePanel = new JPanel();
-        messagePanel.setBounds(510, 610, 300, 200);
-        messagePanel.setBackground(Color.WHITE);
-        messagePanel.setBorder(BorderFactory.createTitledBorder("Message"));
-        add(messagePanel);
+        selectedOptions = new SelectedOptions();
+        selectedOptions.setBounds(510, 610, 300, 200);
+
+        add(selectedOptions);
 
     } // view.SimplePainterView()
 } // view.SimplePainterView
