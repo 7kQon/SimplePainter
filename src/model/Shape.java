@@ -1,17 +1,16 @@
 package model;
 
 import constants.Constants;
-
 import java.awt.*;
 
-public class DrawModel {
+public class Shape {
     public int      nDrawMode;
     public Point src, dest;
     public int      nSize;
     public boolean  bFill;
     public Color    selectedColor;
 
-    public DrawModel(){
+    public Shape(){
         nDrawMode = Constants.NONE;
         src = new Point();
         dest = new Point();
@@ -20,7 +19,7 @@ public class DrawModel {
         selectedColor = Color.BLACK;
     }
 
-    public DrawModel(DrawModel model){
+    public Shape(Shape model){
         this.nDrawMode = model.nDrawMode;
         this.src = model.src;
         this.dest = model.dest;
