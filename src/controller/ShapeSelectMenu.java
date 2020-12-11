@@ -9,35 +9,42 @@ import java.awt.event.ActionListener;
 
 public class ShapeSelectMenu extends ShapeController {
 
-    private JButton[] btnMenuArray;
+    private DrawModeButton[] btnMenuArray;
 
     public ShapeSelectMenu(){
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createTitledBorder("Menu"));
         setLayout(new GridLayout(2,3));
 
-        btnMenuArray = new JButton[6];
+        btnMenuArray = new DrawModeButton[6];
         for(int i = 0; i < btnMenuArray.length; i++){
-            btnMenuArray[i] = new JButton(Constants.MENU[i]);
+            btnMenuArray[i] = new DrawModeButton(Constants.MENU[i]);
+            btnMenuArray[i].setDrawMode(i);
+
             btnMenuArray[i].setBackground(Constants.HOVERING[0]);
             btnMenuArray[i].setForeground(Constants.HOVERING[1]);
+
             btnMenuArray[i].addMouseListener(new HoveringListener());
-            btnMenuArray[i].addActionListener(new MenuListener());
+            btnMenuArray[i].addActionListener(e -> sharedShape.setDrawMode(((DrawModeButton) e.getSource()).drawMode));
+
             add(btnMenuArray[i]);
         }
     }
 
-    private class MenuListener implements ActionListener {
+    private class DrawModeButton extends JButton{
+        int drawMode;
+        public DrawModeButton(){
+            super();
+            drawMode = Constants.NONE;
+        }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
+        public DrawModeButton(String text){
+            super(text);
+            drawMode = Constants.NONE;
+        }
 
-            Object obj = e.getSource();
-            for(int i = 0; i < 6; i++){
-                if(obj == btnMenuArray[i]){
-                    sharedShape.setDrawMode(i);
-                }
-            }
+        public void setDrawMode(int drawMode){
+            this.drawMode = drawMode;
         }
     }
 }

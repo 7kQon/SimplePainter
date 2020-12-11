@@ -5,9 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SimplePainterView extends JPanel {
-    private DrawController drawController;
-    private ShapeSelectMenu menuController;
-    private ShapeOptionForm optionController;
+    private DrawPanel drawPanel;
+    private ShapeSelectMenu shapeSelectMenu;
+    private ShapeOptionForm shapeOptionForm;
     private JPanel messagePanel;
 
     public SimplePainterView(){
@@ -15,17 +15,17 @@ public class SimplePainterView extends JPanel {
         setPreferredSize(new Dimension(820, 830));
         setLayout(null);
 
-        menuController = new ShapeSelectMenu();
-        menuController.setBounds(10,610,300,200);
-        add(menuController);
+        shapeSelectMenu = new ShapeSelectMenu();
+        shapeSelectMenu.setBounds(10,610,300,200);
+        add(shapeSelectMenu);
 
-        drawController = new DrawController();
-        drawController.setBounds(10,10,800,600);
-        add(drawController);
+        drawPanel = new DrawPanel();
+        drawPanel.setBounds(10,10,800,600);
+        add(drawPanel);
 
-        optionController = new ShapeOptionForm();
-        optionController.setBounds(310, 610, 200,200);
-        add(optionController);
+        shapeOptionForm = new ShapeOptionForm();
+        shapeOptionForm.setBounds(310, 610, 200,200);
+        add(shapeOptionForm);
 
         messagePanel = new JPanel();
         messagePanel.setBounds(510, 610, 300, 200);

@@ -11,10 +11,6 @@ public class ShapeController extends JPanel implements IShapeObserver {
         sharedShape = SharedShape.getInstance();
     }
 
-    public Shape getShape(){
-        return new Shape(this.sharedShape);
-    }
-
     @Override
     public void noticeDrawModeChanged(int drawMode) {
 
